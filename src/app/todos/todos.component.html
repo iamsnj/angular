@@ -1,0 +1,30 @@
+<div class="todos">
+    <h3>ToDo List</h3>
+    <div id="msg" class="msg">
+        <div *ngIf="exist==1" class="error">
+            <p>Item already exists!</p>
+        </div>
+        <!-- <div *ngIf="exist==0;" class="success">
+            <p>Item added successfully!</p>
+        </div> -->
+    </div>
+    <form (submit)="addItem()" class="form" onsubmit="hideMsg();">
+        <input type="text" name="item-nput" id="item-input" placeholder="Enter ToDo" [(ngModel)]="inputItem"
+            class="item-input">
+        <input type="button" value="Add" class="item-submit" (click)="addItem()" onclick="hideMsg();">
+    </form>
+    <div *ngFor="let todo of todos; let i=index;" class="item-todo">
+        <div class="checkbox" (click)="toggleItem(i)">
+            <div *ngIf="todo.active; else elseBlock">
+                <mat-icon aria-hidden="false" aria-label="box icon">check_box_outline_blank</mat-icon>
+            </div>
+            <ng-template #elseBlock>
+                <mat-icon aria-hidden="false" aria-label="box icon">check_box</mat-icon>
+            </ng-template>
+        </div>
+        <div class="content {{ (todo.active?'':'done') }}">{{ todo.content }}</div>
+        <span class="delete" (click)="deleteItem(i)">
+            <mat-icon aria-hidden="false" aria-label="delete icon">delete_forever</mat-icon>
+        </span>
+    </div>
+</div>
